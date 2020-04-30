@@ -4,7 +4,10 @@ const sass = require('gulp-sass');
 const panini = require('panini');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
+const cleanCSS = require('gulp-clean-css');
+const uglify = require('gulp-uglify');
 const webpack = require('webpack');
+const pump = require('pump');
 const browsersync = require('browser-sync').create();
 
 
@@ -92,7 +95,31 @@ gulp.task('scss', () => {
     .pipe(browsersync.stream())
 });
 
+gulp.task('minify-css', () => {
+  return gulp.src('dist/assets/css/style.css')
+    .pipe(cleanCSS({compatibility: 'ie8'}))
+    .pipe(gulp.dest('dist/assets/css/'));
+});
+
+gulp.task('compress', function (cb) {
+  pump([
+        gulp.src('dist/assets/js/app.bundle.js'),
+        uglify(),
+        gulp.dest('dist/assets/js/')
+    ],
+    cb
+  );
+});
+
+
+
 let taskDefaults = ['panDulce', 'scss', 'webpack', 'server'];
+
+
+let buildSite = ['minify-css', 'compress'];
+
+gulp.task('build', buildSite);
+
 
 gulp.task('default', taskDefaults, () => {
   gulp.watch(PATHS.scss, ['scss']);
