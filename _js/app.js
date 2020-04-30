@@ -1,0 +1,1 @@
+import lazyLoad from './lazy-load/index'
