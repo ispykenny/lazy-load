@@ -24,7 +24,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.2",
     "gulp-util": "^3.0.8",
-    "handlebars": "^4.3.0",
+    "handlebars": "^4.7.7",
     "intersection-observer": "^0.10.0",
     "panini": "^1.6.2",
     "parcel-bundler": "^1.12.4",
